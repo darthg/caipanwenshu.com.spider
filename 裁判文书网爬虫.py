@@ -93,7 +93,7 @@ sheet.write(0,0,'URL')
 sheet.write(0,1,'文书标题')
 sheet.write(0,2,'裁判时间')
 
-for i in  range(0,4):
+for i in  range(0,25):
      try:
           WebDriverWait(browser,300).until(
           EC.presence_of_element_located((By.CLASS_NAME,"download"))
@@ -124,3 +124,4 @@ for i in  range(0,4):
           break
 workbook.close()
 browser.close()
+
