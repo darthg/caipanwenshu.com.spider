@@ -44,9 +44,13 @@ def writeDataXls(urllist,titlelist,fp):
                sheet.write(j+1,1,titlelist[i][j])
      workbook.close()
 
+
+#----------------------------------------------------------------------------------
 #初始化各项参数
 url="http://wenshu.court.gov.cn/"
 keyword="索普"
+
+#-------------------------------------
 pat='href="(/content/content\?DocID=.*?&amp;KeyWord='+keyword+')"'##这里非常奇葩，有时候amp这个参数你源码中看不到，但是不要忘记加
 print(pat)
 IPfp=r'E:\GitHub\测试文件\IP_Pool.xls'
@@ -61,9 +65,8 @@ Proxy=guoxiaoyi.xiciProxies.getPoxiesRand(IPfp)
 #设置请求头和获取代理池，设置代理IP
 browser=webdriver.Chrome#设置浏览器类型
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('--proxy-server=http://'+IPfp)
+chrome_options.add_argument('--proxy-server=http://'+Proxy)
 chrome_options.add_argument('user-agent="Mozilla/5.0 (iPod; U; CPU iPhone OS 2_1 like Mac OS X; ja-jp) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5F137 Safari/525.20"')
-#chrome_options.add_argument("--headless")
 browser = webdriver.Chrome(chrome_options=chrome_options)
 
 

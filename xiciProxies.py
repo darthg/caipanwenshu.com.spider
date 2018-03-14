@@ -70,7 +70,7 @@ def errorPrint(errorlist):
 
 def start_crawlProxies():
      Proxylist=[]
-     for i in range(1,4):
+     for i in range(1,10):
           url='http://www.xicidaili.com/nn/'+str(i)
           print(url)
           try:
@@ -85,6 +85,8 @@ def start_crawlProxies():
                continue
      return list
 
+list=start_crawlProxies()
+writeIPaddr(list,Proxyfp)
 '''测试
 list=start_crawlProxies()
 writeIPaddr(list,Proxyfp)
