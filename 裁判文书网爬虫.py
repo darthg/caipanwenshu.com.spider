@@ -63,7 +63,7 @@ with open("E:\GitHub\测试文件\失信人测试结果\授信客户裁判文书
 url="http://wenshu.court.gov.cn/list/list/?sorttype=1&number=2LDUFQ5Y&guid=665d8a6a-7472-8349765b-8eb1da9cfb43&conditions=searchWord+QWJS+++%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2:"
 IPfp=r'E:\GitHub\测试文件\IP_Pool.xls'
 #------保存数据的变量
-
+errorList=[]
 #-------------------------------------
 
 
@@ -144,6 +144,8 @@ for k in range(212,rows):
 
                browser.close()
      except Exception as e:
+          print(e)
+          errorList.append(keyword)
           print(keyword+"信息采集失败！")
           browser.close()
           continue
