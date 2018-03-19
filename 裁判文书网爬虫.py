@@ -45,7 +45,7 @@ def writeDataXls(urllist,titlelist,fp):
 
 try:
 #workbook=xlrd.open_workbook(r"E:\GitHub\测试文件\2016年保险明细报表.xls")
-     workbook=xlrd.open_workbook(r"E:\GitHub\测试文件\对公和小企业授信客户名称清单.xls")
+     workbook=xlrd.open_workbook(r"E:/GitHub/测试文件/查询目标/对公和小企业授信客户名称清单.xls")
 except Exception as e:
      print("读取文件出现异常！请确认文件路径！")
 sheets_input=workbook.sheet_by_index(0)
@@ -68,7 +68,7 @@ errorList=[]
 
 
 
-for k in range(212,rows):
+for k in range(1305,rows):
      try:
           Proxy=guoxiaoyi.xiciProxies.getPoxiesRand(IPfp)
           print("已经载入代理"+str(Proxy))
@@ -91,27 +91,33 @@ for k in range(212,rows):
           searchbutton=browser.find_element_by_class_name("head_search_btn")#中国裁判文书网找这个搜索按钮一定要用
           searchbutton.click()
           print("已提交查询信息，准备转向...")'''
-          time.sleep(3)
+          WebDriverWait(browser,300).until(
+               EC.presence_of_element_located((By.CLASS_NAME,"list_datacount"))
+          )#设置等待时间
           WebDriverWait(browser,300).until(
                EC.presence_of_element_located((By.ID,"resultList"))
           )#设置等待时间
-          WebDriverWait(browser,300).until(
-               EC.presence_of_element_located((By.CLASS_NAME,"wstitle"))
-          )#设置等待时间
+          print("正在等待元素加载")
           data=browser.page_source#page_source方法输出的字符串，一定要Encode编码转换成二进制才能open出来
           #保存爬取的所需数据
+          print("已获取页面源码")
           xpathdata=html.etree.HTML(data)
           title_count=xpathdata.xpath('//*[@id="span_datacount"]/text()')
+          print("已定位页面元素")
+          print(title_count)
           print("共有"+str(title_count[0])+"条数据")
-          if title_count[0]==0:
+          if int(title_count[0]) == 0:
                browser.close()
-               break
+               continue
           else:
                if int(title_count[0])%5==0:
                     pageno=int(title_count[0])//5
                else:pageno=int(title_count[0])//5+1
                print("共有"+str(pageno)+"页")
-
+               WebDriverWait(browser,300).until(
+                    EC.presence_of_element_located((By.CLASS_NAME,"wstitle"))
+               )#设置等待时间
+               print("正在等待元素加载")
                for i in  range(0,pageno):
                     if i>=25:
                          break
@@ -136,7 +142,7 @@ for k in range(212,rows):
                     if i<pageno-1 and pageno!=1:
                          browser=nextpage(browser)
                          WebDriverWait(browser,300).until(
-                              EC.presence_of_element_located((By.CLASS_NAME,"wstitle"))
+                              EC.presence_of_element_located((By.CLASS_NAME,"DocIds"))
                          )#设置等待时间
                          time.sleep(2)
                     else:
